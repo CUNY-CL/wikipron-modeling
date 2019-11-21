@@ -1,0 +1,26 @@
+#!/bin/bash
+# Basic description of the preparation pipeline.
+
+set -eou pipefail
+
+readonly SEED=1169
+
+for TSV in *.tsv; do
+    echo "Shortening: ${TSV}"
+    TMP=$(mktemp -t)
+    ./short.py "${TSV}" > "${TMP}"
+    mv "${TMP}" "${TSV}"
+done
+
+# At this point I manually inspected the most extreme elements.
+
+for TSV in *.tsv; do
+    echo "Splitting: ${TSV}"
+    BASE=$(basename "${TSV}" .tsv)
+    ./split.py                           \
+        --seed="${SEED}"                 \
+        --input_path="${TSV}"            \
+        --train_path="${BASE}_train.tsv" \
+        --dev_path="${BASE}_dev.tsv"     \
+        --test_path="${BASE}_test.tsv"
+done
