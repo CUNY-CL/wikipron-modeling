@@ -1,0 +1,3 @@
+3_fairseq/checkpoints/*
+3_fairseq/data-bin/*
+3_fairseq/data-txt/*
