@@ -39,19 +39,19 @@ def _edit_distance(x: Labels, y: Labels) -> int:
     return int(table[-1][-1])
 
 
-def _score(gold: str, hypo: str) -> Tuple[int, int]:
+def _score(gold: Labels, hypo: Labels) -> Tuple[int, int]:
     """Computes sufficient statistics for LER calculation."""
-    gold_labels = list(gold)
-    hypo_labels = list(hypo)
-    edits = _edit_distance(gold_labels, hypo_labels)
+    edits = _edit_distance(gold, hypo)
     if edits:
         logging.warning(
-            "Incorrect prediction:\t%s (predicted: %s)", gold, hypo
+            "Incorrect prediction:\t%r (predicted: %r)",
+            " ".join(gold),
+            " ".join(hypo),
         )
-    return (edits, len(gold_labels))
+    return (edits, len(gold))
 
 
-def _tsv_reader(path: str) -> Iterator[Tuple[str, str]]:
+def _tsv_reader(path: str) -> Iterator[Tuple[Labels, Labels]]:
     """Reads pairs of strings from a TSV filepath."""
     with open(path, "r") as source:
         for line in source:
@@ -59,7 +59,7 @@ def _tsv_reader(path: str) -> Iterator[Tuple[str, str]]:
             # Stripping is performed after the fact so the previous line
             # doesn't fail when `hypo` is null.
             hypo = hypo.rstrip()
-            yield (gold, hypo)
+            yield (gold.split(), hypo.split())
 
 
 def main(args: argparse.Namespace) -> None:
