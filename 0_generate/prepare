@@ -31,8 +31,8 @@ for TSV in *.tsv; do
     BASE=$(basename "${TSV}" .tsv)
     ${DIR}/split.py                      \
         --seed="${SEED}"                 \
-        --input_path="${TSV}"            \
-        --train_path="${BASE}_train.tsv" \
-        --dev_path="${BASE}_dev.tsv"     \
-        --test_path="${BASE}_test.tsv"
+        --input-path="${TSV}"            \
+        --train-path="${BASE}_train.tsv" \
+        --dev-path="${BASE}_dev.tsv"     \
+        --test-path="${BASE}_test.tsv"
 done
