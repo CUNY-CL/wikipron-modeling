@@ -5,10 +5,13 @@ set -eou pipefail
 
 readonly SEED=1169
 
+# Directory of this file
+readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 for TSV in *.tsv; do
     echo "Shortening: ${TSV}"
     TMP=$(mktemp -t)
-    ./short.py "${TSV}" > "${TMP}"
+    ${DIR}/short.py "${TSV}" > "${TMP}"
     mv "${TMP}" "${TSV}"
 done
 
@@ -17,7 +20,7 @@ done
 for TSV in *.tsv; do
     echo "Splitting: ${TSV}"
     BASE=$(basename "${TSV}" .tsv)
-    ./split.py                           \
+    ${DIR}/split.py                      \
         --seed="${SEED}"                 \
         --input_path="${TSV}"            \
         --train_path="${BASE}_train.tsv" \
