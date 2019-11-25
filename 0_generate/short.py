@@ -24,7 +24,7 @@ def main(args: argparse.Namespace) -> None:
             phonemes = phoneme_str.split(" ")
             assert phonemes, "Null phoneme string"
             if len(word) < 2 or len(phonemes) < 2:
-                    continue
+                continue
             print(f"{word}\t{phoneme_str}")
 
 

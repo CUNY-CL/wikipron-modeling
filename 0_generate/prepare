@@ -15,6 +15,15 @@ for TSV in *.tsv; do
     mv "${TMP}" "${TSV}"
 done
 
+# Eliminate cases of multiple gold targets for a source.
+for TSV in *.tsv; do
+    echo "Removing free variation: ${TSV}"
+    TMP=$(mktemp -t)
+    ./free_variation.py "${TSV}" > "${TMP}"
+    mv "${TMP}" "${TSV}"
+done
+
+
 # At this point I manually inspected the most extreme elements.
 
 for TSV in *.tsv; do
