@@ -19,7 +19,7 @@ done
 for TSV in *.tsv; do
     echo "Removing free variation: ${TSV}"
     TMP=$(mktemp -t)
-    ./free_variation.py "${TSV}" > "${TMP}"
+    ${DIR}/free_variation.py "${TSV}" > "${TMP}"
     mv "${TMP}" "${TSV}"
 done
 
