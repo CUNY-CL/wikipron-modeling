@@ -35,3 +35,4 @@ done
 
 mkdir data-txt
 cp *.{graph,phon}emes data-txt
+rm *.{graph,phon}emes
