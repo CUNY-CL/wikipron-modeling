@@ -1,3 +1,5 @@
 3_fairseq/checkpoints/*
 3_fairseq/data-bin/*
 3_fairseq/data-txt/*
+3_fairseq/dev-scores/*
+3_fairseq/test-scores/*
