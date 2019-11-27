@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
 for dim in 8 16 32 64 128; do
 	for lang in $(ls data-bin); do
 		./train-one.sh "$lang" "$dim"
