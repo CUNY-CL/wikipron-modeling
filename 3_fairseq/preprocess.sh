@@ -33,6 +33,6 @@ for file in dev.*.graphemes; do  # e.g. dev.kor_phonetic.graphemes
         --destdir "data-bin/$lang"
 done
 
-mkdir data-txt
+mkdir -p data-txt
 cp *.{graph,phon}emes data-txt
 rm *.{graph,phon}emes
