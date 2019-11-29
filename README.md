@@ -10,9 +10,11 @@
 * `hin`: Hindi
 * `hun`: Hungarian
 * `ice`: Icelandic
+* `jpn`: Japanese
 * `kor`: Korean
 * `lit`: Lithuanian
 * `rum`: Romanian
+* `wel_sw`: Welsh (Southern)
 
 We'll add Japanese (and remove...French?) if it's ready in time.
 
