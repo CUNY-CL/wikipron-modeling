@@ -11,20 +11,20 @@ import argparse
 import contextlib
 import logging
 
-import numpy as np
+import numpy
 
 
 def main(args: argparse.Namespace) -> None:
     # Creates indices for splits.
     with open(args.input_path, "r") as source:
         n_samples = sum(1 for _ in source)
-    np.random.seed(args.seed)
-    indices = np.random.permutation(n_samples)
+    numpy.random.seed(args.seed)
+    indices = numpy.random.permutation(n_samples)
     train_right = int(n_samples * 0.8)
     dev_right = int(n_samples * 0.9)
     train_indices = indices[:train_right]
     logging.info("Train set:\t%d lines", len(train_indices))
-    dev_indices = indices[train_right: dev_right]
+    dev_indices = indices[train_right:dev_right]
     logging.info("Development set:\t%d lines", len(dev_indices))
     test_indices = indices[dev_right:]
     logging.info("Test set:\t\t%d lines", len(test_indices))
@@ -55,15 +55,15 @@ if __name__ == "__main__":
         help="random seed for shuffling data",
     )
     parser.add_argument(
-        "--input-path", required=True, help="path to input data"
+        "--input_path", required=True, help="path to input data"
     )
     parser.add_argument(
-        "--train-path", required=True, help="path to output training data"
+        "--train_path", required=True, help="path to output training data"
     )
     parser.add_argument(
-        "--dev-path", required=True, help="path to output development data"
+        "--dev_path", required=True, help="path to output development data"
     )
     parser.add_argument(
-        "--test-path", required=True, help="path to output test data"
+        "--test_path", required=True, help="path to output test data"
     )
     main(parser.parse_args())
