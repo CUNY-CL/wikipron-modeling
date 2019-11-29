@@ -1,36 +1,34 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -euo pipefail
 
 # Fairseq expects six files:
 # Two train, two dev, two test, each distinguished by prefixes.
 # One file is the source and one is the target, distinguished by suffixes.
-TSV_DIR=../2_tsv
+readonly TSV_DIR=../2_tsv
 
-for type in train dev test; do
-    for TSV in "$TSV_DIR"/*"$type".tsv; do
+for TASK in train dev test; do
+    for TSV in "${TSV_DIR}"/*"${TASK}.tsv"; do
         echo "Source/target splitting: ${TSV}"
-        
-        # Separate graphemes with spaces
+        # Separate graphemes with spaces.
         cut -d$'\t' -f1 "$TSV" | 
-            sed 's/./& /g' > "$type".$(basename ${TSV%_${type}.tsv}).graphemes
+            sed 's/./& /g' > "${TASK}".$(basename ${TSV%_${TASK}.tsv}).graphemes
         # Phonemes are already separated intelligently in WikiPron.
-        cut -d$'\t' -f2 "$TSV" > "$type".$(basename ${TSV%_${type}.tsv}).phonemes
+        cut -d$'\t' -f2 "$TSV" > "$TASK".$(basename ${TSV%_${TASK}.tsv}).phonemes
     done
 done
 
-
-for file in dev.*.graphemes; do  # e.g. dev.kor_phonetic.graphemes
-    lang=$(echo "$file" | cut -d'.' -f2)
-    echo "fairseq-preprocess $lang"
+for DEVPATH in dev.*.graphemes; do  # e.g. dev.kor_phonetic.graphemes
+    LANGUAGE="$(echo $DEVPATH | cut -d'.' -f2)"
+    echo "fairseq-preprocess ${LANGUAGE}"
     fairseq-preprocess \
-        --source-lang "$lang".graphemes \
-        --target-lang "$lang".phonemes \
+        --source-lang "${LANGUAGE}.graphemes" \
+        --target-lang "${LANGUAGE}.phonemes" \
         --trainpref 'train' \
         --validpref 'dev' \
         --testpref 'test' \
         --tokenizer space \
-        --destdir "data-bin/$lang"
+        --destdir "data-bin/${LANGUAGE}"
 done
 
 mkdir -p data-txt

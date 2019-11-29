@@ -1,26 +1,27 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 set -euo pipefail
 
-lang="$1"
+readonly LANGUAGE="$1"
 shift
 
-DIMENSION="$1"
+readonly DIM="$1"
 shift
 
-CHECKPOINT_DIR=checkpoints/"$lang"-"$DIMENSION"
+readonly CHECKPOINT_DIR="checkpoints/${LANGUAGE}-${DIM}"
 
 fairseq-generate \
-	data-bin/"$lang" \
-	--gen-subset test \
-    --source-lang "$lang".graphemes \
-    --target-lang "$lang".phonemes \
-	--path "$CHECKPOINT_DIR"/checkpoint_best.pt \
-	--beam 5 \
-	> "$CHECKPOINT_DIR"/output.txt
+    "data-bin/${LANGUAGE}" \
+    --gen-subset test \
+    --source-lang "${LANGUAGE}.graphemes" \
+    --target-lang "${LANGUAGE}.phonemes" \
+    --path "${CHECKPOINT_DIR}/checkpoint_best.pt" \
+    --beam 5 \
+    > "${CHECKPOINT_DIR}/output.txt"
 
 paste \
-	<(cat "$CHECKPOINT_DIR"/output.txt | grep '^T-' | cut -f2) \
-	<(cat "$CHECKPOINT_DIR"/output.txt | grep '^H-' | cut -f3) \
-	> "$CHECKPOINT_DIR"/output.tsv
+    <(cat "${CHECKPOINT_DIR}/output.txt" | grep '^T-' | cut -f2) \
+    <(cat "${CHECKPOINT_DIR}/output.txt" | grep '^H-' | cut -f3) \
+    > "${CHECKPOINT_DIR}/output.tsv"
 
-../1_evaluate/evaluate.py "$CHECKPOINT_DIR"/output.tsv 2>/dev/null
+../1_evaluate/evaluate.py "${CHECKPOINT_DIR}/output.tsv" 2>/dev/null

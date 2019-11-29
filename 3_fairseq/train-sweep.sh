@@ -1,24 +1,29 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 set -euo pipefail
 
-for dim in 8 16 32 64 128; do
-	for lang in $(ls data-bin); do
-		./train-one.sh "$lang" "$dim"
-	done
+readonly DIMS=(64 128 256 512 1024)
+
+for DIM in "${DIMS[@]}"; do
+    for LANGUAGE in $(ls data-bin); do
+        ./train-one.sh "${LANGUAGE}" "${DIM}"
+    done
 done
 
 mkdir -p dev-scores
 
-for lang in $(ls data-bin); do
-	for dim in 8 16 32 64 128; do
-		./evaluate-one-dev.sh "$lang" "$dim" > dev-scores/"dev-scores-$lang-$dim.txt"
-	done
+for LANGUAGE in $(ls data-bin); do
+    for DIM in "${DIMS[@]}"; do
+        ./evaluate-one-dev.sh "${LANGUAGE}" "${DIM}" \
+        > "dev-scores/dev-scores-${LANGUAGE}-${DIM}.txt"
+     done
 done
 
 mkdir -p test-scores
 
-for lang in $(ls data-bin); do
-	for dim in 8 16 32 64 128; do
-		./evaluate-one-test.sh "$lang" "$dim" > test-scores/"test-scores-$lang-$dim.txt"
-	done
+for LANGUAGE in $(ls data-bin); do
+    for DIM in "${DIMS[@]}"; do
+        ./evaluate-one-test.sh "${LANGUAGE}" "$DIM" \
+        > "test-scores/test-scores-${LANGUAGE}-${DIM}.txt"
+    done
 done
