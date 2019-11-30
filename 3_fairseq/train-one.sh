@@ -8,7 +8,7 @@ shift
 readonly DIM="$1"
 shift
 
-# TODO: change checkpoint dir if we do hpm sweeps
+# TODO: change checkpoint dir if we do hpm sweeps.
 
 fairseq-train "data-bin/${LANGUAGE}" \
     --source-lang "${LANGUAGE}.graphemes" \
@@ -27,4 +27,5 @@ fairseq-train "data-bin/${LANGUAGE}" \
     --decoder-hidden-size "${DIM}" \
     --max-sentences "${DIM}" \
     --max-epoch 50 \
+    --no-epoch-checkpoints \
     "$@"  # In case we want to configure more from caller script.
