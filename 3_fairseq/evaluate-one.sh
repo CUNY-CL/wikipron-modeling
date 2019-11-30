@@ -8,7 +8,7 @@ shift
 readonly DIM="$1"
 shift
 
-readonly CHECKPOINT_DIR=checkpoints/"${LANGUAGE}-${DIM}"
+readonly CHECKPOINT_DIR="checkpoints/${LANGUAGE}-${DIM}"
 
 fairseq-generate \
     "data-bin/${LANGUAGE}" \

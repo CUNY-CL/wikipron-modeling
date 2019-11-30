@@ -17,11 +17,11 @@ fairseq-generate \
     --target-lang "${LANGUAGE}.phonemes" \
     --path "${CHECKPOINT_DIR}/checkpoint_best.pt" \
     --beam 5 \
-    > "${CHECKPOINT_DIR}/output.txt"
+    > "${CHECKPOINT_DIR}/test.txt"
 
 paste \
-    <(cat "${CHECKPOINT_DIR}/output.txt" | grep '^T-' | cut -f2) \
-    <(cat "${CHECKPOINT_DIR}/output.txt" | grep '^H-' | cut -f3) \
-    > "${CHECKPOINT_DIR}/output.tsv"
+    <(cat "${CHECKPOINT_DIR}/test.txt" | grep '^T-' | cut -f2) \
+    <(cat "${CHECKPOINT_DIR}/test.txt" | grep '^H-' | cut -f3) \
+    > "${CHECKPOINT_DIR}/test.tsv"
 
-../1_evaluate/evaluate.py "${CHECKPOINT_DIR}/output.tsv" 2>/dev/null
+../1_evaluate/evaluate.py "${CHECKPOINT_DIR}/test.tsv" 2>/dev/null
