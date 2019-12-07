@@ -9,7 +9,6 @@ readonly TSV_DIR=../2_tsv
 
 for TASK in train dev test; do
     for TSV in "${TSV_DIR}"/*"${TASK}.tsv"; do
-        echo "Source/target splitting: ${TSV}"
         # Separate graphemes with spaces.
         cut -d$'\t' -f1 "$TSV" | 
             sed 's/./& /g' > "${TASK}".$(basename ${TSV%_${TASK}.tsv}).graphemes
@@ -18,9 +17,8 @@ for TASK in train dev test; do
     done
 done
 
-for DEVPATH in dev.*.graphemes; do  # e.g. dev.kor_phonetic.graphemes
+for DEVPATH in dev.*.graphemes; do  # e.g., dev.kor_phonetic.graphemes
     LANGUAGE="$(echo $DEVPATH | cut -d'.' -f2)"
-    echo "fairseq-preprocess ${LANGUAGE}"
     fairseq-preprocess \
         --source-lang "${LANGUAGE}.graphemes" \
         --target-lang "${LANGUAGE}.phonemes" \

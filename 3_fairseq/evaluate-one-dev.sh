@@ -2,13 +2,19 @@
 
 set -euo pipefail
 
-readonly LANGUAGE="$1"
-shift
+readonly LANGUAGE="$1"; shift
+# Encoder embedding dim.
+readonly EED="$1"; shift
+# Encoder hidden layer size.
+readonly EHS="$1"; shift
+# Decoder embedding dim.
+readonly DED="$1"; shift
+# Decoder hidden layer size.
+readonly DHS="$1"; shift
+# TODO: try changing the two decoder embedder dimensions separately.
 
-readonly DIM="$1"
-shift
-
-readonly CHECKPOINT_DIR="checkpoints/${LANGUAGE}-${DIM}"
+readonly STRING="${LANGUAGE}-${EED}-${EHS}-${DED}-${DHS}"
+readonly CHECKPOINT_DIR="checkpoints/${STRING}"
 
 fairseq-generate \
     "data-bin/${LANGUAGE}" \

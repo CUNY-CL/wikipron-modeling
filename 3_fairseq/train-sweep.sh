@@ -2,28 +2,31 @@
 
 set -euo pipefail
 
-readonly DIMS=(64 128 256 512 1024)
+readonly EMBEDDING_DIMS=(32 64 128 256)
+readonly LAYER_DIMS=(64 128 256 512 1024)
 
-for DIM in "${DIMS[@]}"; do
-    for LANGUAGE in $(ls data-bin); do
-        ./train-one.sh "${LANGUAGE}" "${DIM}"
-    done
-done
-
-mkdir -p dev-scores
+mkdir -p dev-scores test-scores
 
 for LANGUAGE in $(ls data-bin); do
-    for DIM in "${DIMS[@]}"; do
-        ./evaluate-one-dev.sh "${LANGUAGE}" "${DIM}" \
-        > "dev-scores/dev-scores-${LANGUAGE}-${DIM}.txt"
-     done
-done
-
-mkdir -p test-scores
-
-for LANGUAGE in $(ls data-bin); do
-    for DIM in "${DIMS[@]}"; do
-        ./evaluate-one-test.sh "${LANGUAGE}" "$DIM" \
-        > "test-scores/test-scores-${LANGUAGE}-${DIM}.txt"
+    # Encoder embedding layer.
+    for EED in "${EMBEDDING_DIMS[@]}"; do
+        # Encoding hidden layer.
+        for EHS in "${LAYER_DIMS[@]}"; do
+            # Decoder embedding layers.
+            for DED in "${EMBEDDING_DIMS[@]}"; do
+                # Decoder hidden layer.
+                for DHS in "${LAYER_DIMS[@]}"; do
+                    ./train-one.sh \
+                        "${LANGUAGE}" "${EED}" "${EHS}" "${DED}" "${DHS}"
+                     STRING="${LANGUAGE}-${EED}-${EHS}-${DED}-${DHS}"
+                    ./evaluate-one-dev.sh \
+                        "${LANGUAGE}" "${EED}" "${EHS}" "${DED}" "${DHS}" \
+                        > "dev-scores/scores-${STRING}"
+                    ./evaluate-one-test.sh \
+                        "${LANGUAGE}" "${EED}" "${EHS}" "${DED}" "${DHS}" \
+                        > "test-scores/scores-${STRING}"
+                done
+            done
+        done
     done
 done
