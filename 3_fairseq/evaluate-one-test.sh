@@ -15,6 +15,7 @@ readonly DHS="$1"; shift
 
 readonly STRING="${LANGUAGE}-${EED}-${EHS}-${DED}-${DHS}"
 readonly CHECKPOINT_DIR="checkpoints/${STRING}"
+readonly TEST="${CHECKPOINT_DIR}/test"
 
 fairseq-generate \
     "data-bin/${LANGUAGE}" \
@@ -23,11 +24,11 @@ fairseq-generate \
     --target-lang "${LANGUAGE}.phonemes" \
     --path "${CHECKPOINT_DIR}/checkpoint_best.pt" \
     --beam 5 \
-    > "${CHECKPOINT_DIR}/test.txt"
+    > "${TEST}.txt"
 
 paste \
     <(cat "${CHECKPOINT_DIR}/test.txt" | grep '^T-' | cut -f2) \
     <(cat "${CHECKPOINT_DIR}/test.txt" | grep '^H-' | cut -f3) \
-    > "${CHECKPOINT_DIR}/test.tsv"
+    > "${TEST}.tsv"
 
-../1_evaluate/evaluate.py "${CHECKPOINT_DIR}/test.tsv" 2>/dev/null
+../1_evaluate/evaluate.py "${TEST}.tsv" 2>/dev/null

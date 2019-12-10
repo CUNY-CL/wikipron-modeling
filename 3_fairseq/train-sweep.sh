@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-readonly EMBEDDING_DIMS=(32 64 128 256)
-readonly LAYER_DIMS=(64 128 256 512 1024)
+readonly EMBEDDING_DIMS=(64 128 256 512)
+readonly LAYER_DIMS=(128 256 512 1024)
 
 mkdir -p dev-scores test-scores
 
