@@ -31,4 +31,4 @@ paste \
     <(cat "${CHECKPOINT_DIR}/test.txt" | grep '^H-' | cut -f3) \
     > "${TEST}.tsv"
 
-../1_evaluate/evaluate.py "${TEST}.tsv" 2>/dev/null
+../scripts/evaluate.py "${TEST}.tsv" 2>/dev/null

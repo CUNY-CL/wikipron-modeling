@@ -20,7 +20,7 @@ We'll add Japanese (and remove...French?) if it's ready in time.
 
 # Evaluation
 
-Use `1_evaluate/./evaluate.py`. It computes phone error rate (PER) and word
+Use `scripts/./evaluate.py`. It computes phone error rate (PER) and word
 error rate (WER).
 
 # Environment Set-up
@@ -28,7 +28,6 @@ error rate (WER).
 [`conda`](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html)
 is recommended for a reproducible environment.
 Once you have conda installed, create a new conda environment by running this:
-
 
 ```bash
 conda env create -f environment.yml
