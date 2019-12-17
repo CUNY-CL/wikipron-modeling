@@ -16,13 +16,13 @@ for LANGUAGE in $(ls data-bin); do
             for DED in "${EMBEDDING_DIMS[@]}"; do
                 # Decoder hidden layer.
                 for DHS in "${LAYER_DIMS[@]}"; do
-                    ./train-one.sh \
+                    ./train-one \
                         "${LANGUAGE}" "${EED}" "${EHS}" "${DED}" "${DHS}"
                      STRING="${LANGUAGE}-${EED}-${EHS}-${DED}-${DHS}"
-                    ./evaluate-one-dev.sh \
+                    ./evaluate-one-dev \
                         "${LANGUAGE}" "${EED}" "${EHS}" "${DED}" "${DHS}" \
                         > "dev-scores/scores-${STRING}"
-                    ./evaluate-one-test.sh \
+                    ./evaluate-one-test \
                         "${LANGUAGE}" "${EED}" "${EHS}" "${DED}" "${DHS}" \
                         > "test-scores/scores-${STRING}"
                 done
