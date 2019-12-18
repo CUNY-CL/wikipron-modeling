@@ -3,20 +3,18 @@
 * `ady`: Adyghe
 * `bul`: Bulgarian
 * `bur`: Burmese
-* `eng_uk`: English (RP)
+* `eng_uk`: English (UK; RP)
 * `fre`: French
 * `geo`: Georgian
 * `gre`: Modern Greek
 * `hin`: Hindi
 * `hun`: Hungarian
 * `ice`: Icelandic
-* `jpn`: Japanese
+* `jpn`: Japanese (Hiragana)
 * `kor`: Korean
 * `lit`: Lithuanian
 * `rum`: Romanian
 * `wel_sw`: Welsh (Southern)
-
-We'll add Japanese (and remove...French?) if it's ready in time.
 
 # Evaluation
 
