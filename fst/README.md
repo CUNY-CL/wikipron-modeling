@@ -14,19 +14,25 @@ evaluation.
 Requirements
 ------------
 
--   [Python 3.6 or better](https://www.python.org/)
--   [OpenFst
-    1.7.5](http://www.openfst.org/twiki/pub/FST/FstDownload/openfst-1.7.5.tar.gz)
-    compiled with `./configure --enable-grm`
--   [Pynini
-    2.0.9.post2](http://www.opengrm.org/twiki/pub/GRM/PyniniDownload/pynini-2.0.9.post2.tar.gz)
--   [BaumWelch
-    0.3.0](http://www.opengrm.org/twiki/pub/GRM/BaumWelchDownload/baumwelch-0.3.0.tar.gz)
--   [OpenGrm-NGram
-    1.3.8](http://www.opengrm.org/twiki/pub/GRM/NGramDownload/ngram-1.3.8.tar.gz)
+See `../environment.yml` for version numbers used.
+
+-   [Python](https://www.python.org/)
+-   [OpenFst](http://www.openfst.org/) compiled with `./configure --enable-grm`
+-   [Pynini](http://pynini.opengrm.org/)
+-   [BaumWelch](http://baumwelch.opengrm.org/)
+-   [NGram](http://ngram.opengrm.org/)
 
 Suggested workflow
 ------------------
+
+This assumes the data is formatted as a two-column tab-separated values (TSV)
+file where the first column is a UTF-8-encoded grapheme sequence and the second
+column consists of UTF-8-encoded IPA symbols separated by space. E.g., consider
+the following line, a Romanian pronunciation
+
+    pornește    p o r n e ʃ t 
+
+The following shows the actual workflow:
 
     # Extracts symbol table.
     cut -f2 lexicon.tsv | ngramsymbols > phones.sym

@@ -46,9 +46,6 @@ To see shell commands as they are invoked, set the log level to DEBUG."""
 __author__ = "Kyle Gorman"
 
 
-# TODO(kbg): Support new tokenized data format.
-
-
 import argparse
 import functools
 import logging
@@ -83,7 +80,7 @@ def _str_to_bool(value: str) -> bool:
         return True
     elif value in ("false", "0"):
         return False
-    raise argparse.ArgumentTypeError("Boolean value expected")
+    raise argparse.ArgumentTypeError(f"Boolean value expected; got {value}")
 
 
 class PairNGramAligner:
