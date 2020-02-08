@@ -59,7 +59,7 @@ readonly OUTPUT_TOKEN_TYPE="${OUTPUT_TOKEN_TYPE:-utf8}"
 main() {
     local -r WORDS_PATH="$(mktemp -u -t words.XXXXXX.$$.txt)"
     cut -f1 "${INPUT_PATH}" > "${WORDS_PATH}"
-    ./predict.py                                   \
+    fst/./predict.py                               \
         --fst_path="${FST_PATH}"                   \
         --input_token_type="${INPUT_TOKEN_TYPE}"   \
         --output_token_type="${OUTPUT_TOKEN_TYPE}" \

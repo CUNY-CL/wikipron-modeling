@@ -39,29 +39,29 @@ The following shows the actual workflow:
     # Splits data into train, dev, and test.
     readonly SEED="${RANDOM}"
     echo "Using seed: ${SEED}"
-    ./split.py \
+    scripts/./split.py \
         --seed="${SEED}" \
         --input_path=lexicon.tsv \
         --train_path=train.tsv \
         --dev_path=dev.tsv \
         --test_path=test.tsv
     # Computes corpus of encoded alignments.
-    ./align.py \
+    fst/./align.py \
         --encoder_path=encoder.enc \
         --far_path=alignments.far \
         --output_token_type=phones.sym \
         --seed="${SEED}" \
         --tsv_path=train.tsv
     # Counts n-grams, smooths, shrinks, and decodes.
-    ./model \
+    fst/./model \
         --encoder_path=encoder.enc \
         --far_path=alignments.far \
         --fst_path=model.fst
     rm -f alignments.far encoder.enc
-    ./predict \
+    fst/./predict \
         --input_path=test.tsv \
         --fst_path=model.fst \
         --output_path=hypo.txt \
         --output_token_type=phones.sym
-    ./evaluate --gold_path=test.tsv --hypo_path=hypo.txt
+    fst/./evaluate --gold_path=test.tsv --hypo_path=hypo.txt
     rm -f train.tsv dev.tsv test.tsv hypo.txt
