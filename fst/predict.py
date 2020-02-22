@@ -40,9 +40,7 @@ class Rewriter:
             logging.error("Composition failure: %s", i)
             return "<composition failure>"
         lattice.project(True).rmepsilon()
-        return pynini.shortestpath(lattice).stringify(
-            token_type=self.output_token_type
-        )
+        return pynini.shortestpath(lattice).string(self.output_token_type)
 
 
 def _reader(path: str) -> Iterator[str]:

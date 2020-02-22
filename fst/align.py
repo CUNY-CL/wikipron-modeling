@@ -181,10 +181,10 @@ class PairNGramAligner:
         p_labels: Set[int] = set()
         # Curries compiler functions for the FARs.
         icompiler = functools.partial(
-            pynini.acceptor, token_type=input_token_type, attach_symbols=False
+            pynini.acceptor, token_type=input_token_type
         )
         ocompiler = functools.partial(
-            pynini.acceptor, token_type=output_token_type, attach_symbols=False
+            pynini.acceptor, token_type=output_token_type
         )
         logging.info("Constructing grapheme and phoneme FARs")
         g_writer = pywrapfst.FarWriter.create(self.g_path)
