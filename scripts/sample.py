@@ -58,7 +58,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("infile")
     parser.add_argument("n", type=int, help="number of samples")
-    parser.add_argument("seed", type=int, required=True, help="random seed")
+    parser.add_argument("seed", type=int, help="random seed")
     parser.add_argument("--outfile", default=sys.stdout)
     parser.add_argument(
         "--smoothing-amount",
