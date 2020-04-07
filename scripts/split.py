@@ -18,16 +18,16 @@ def main(args: argparse.Namespace) -> None:
     # Creates indices for splits.
     with open(args.input_path, "r") as source:
         n_samples = sum(1 for _ in source)
+    logging.info(f"Total set:\t{n_samples:,} lines")
     numpy.random.seed(args.seed)
     indices = numpy.random.permutation(n_samples)
     train_right = int(n_samples * 0.8)
     dev_right = int(n_samples * 0.9)
-    train_indices = indices[:train_right]
-    logging.info("Train set:\t%d lines", len(train_indices))
-    dev_indices = indices[train_right:dev_right]
-    logging.info("Development set:\t%d lines", len(dev_indices))
-    test_indices = indices[dev_right:]
-    logging.info("Test set:\t\t%d lines", len(test_indices))
+    logging.info(f"Train set:\t{train_right:,} lines")
+    dev_indices = frozenset(indices[train_right:dev_right])
+    logging.info(f"Development set:\t{len(dev_indices):,} lines")
+    test_indices = frozenset(indices[dev_right:])
+    logging.info(f"Test set:\t\t{len(test_indices):,} lines")
     # Writes out the splits.
     with contextlib.ExitStack() as stack:
         source = stack.enter_context(open(args.input_path, "r"))
@@ -36,12 +36,12 @@ def main(args: argparse.Namespace) -> None:
         test_sink = stack.enter_context(open(args.test_path, "w"))
         for i, line in enumerate(source):
             line = line.rstrip()
-            if i in train_indices:
-                sink = train_sink
-            elif i in dev_indices:
+            if i in dev_indices:
                 sink = dev_sink
-            else:
+            elif i in test_indices:
                 sink = test_sink
+            else:
+                sink = train_sink
             print(line, file=sink)
 
 
